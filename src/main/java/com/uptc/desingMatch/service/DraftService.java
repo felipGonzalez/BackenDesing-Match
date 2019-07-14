@@ -29,10 +29,15 @@ public class DraftService {
 	 }
 	 
 	 public void remove(Integer id) {
-		 repository.deleteById(id);
+		 repository.deleteById(id);		
 	 }
 	 
-	 public Optional<Draft> getCompany(Integer id) {
+	 public void removeCascade(Integer id) {
+		 System.out.println("Entro a borrar en cascada");
+		 repository.deleteById(id);		
+	 }
+	 
+	 public Optional<Draft> getDraft(Integer id) {
 		 return repository.findById(id);
 	 }
 	

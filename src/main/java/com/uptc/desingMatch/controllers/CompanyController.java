@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.swing.ImageIcon;
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -27,6 +27,7 @@ import com.uptc.desingMatch.models.Company;
 import com.uptc.desingMatch.service.CompanyService;
 import com.uptc.desingMatch.util.Const;
 import com.uptc.desingMatch.util.RestResponse;
+import com.uptc.desingMatch.util.Util;
 
 @RestController
 @RequestMapping("/company")
@@ -36,6 +37,9 @@ public class CompanyController {
 	
 	@Autowired
 	private CompanyService service;
+	
+	@Autowired 
+	private ServletContext context;
 	
 	@GetMapping(value="")
 	public List<Company> getList(){
@@ -116,6 +120,8 @@ public class CompanyController {
 				company.setUrlCompany(company.getNameCompany()+ (count++));
 			}
 			company2 = service.save(company);
+			Util.createImg(context.getRealPath("/finalDisenos")+"/"+company.getUrlCompany());
+			Util.createImg(context.getRealPath("/imgDisenos")+"/"+company.getUrlCompany());
 		} catch (Exception e) {
 			System.out.println(e.getCause());
 			if(e.getMessage().contains("4732")) {
