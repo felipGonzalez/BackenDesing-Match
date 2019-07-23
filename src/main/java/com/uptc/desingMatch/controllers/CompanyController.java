@@ -1,6 +1,7 @@
 package com.uptc.desingMatch.controllers;
 
-import java.awt.Image;
+import java.security.MessageDigest;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -8,10 +9,7 @@ import java.util.Optional;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -91,7 +88,7 @@ public class CompanyController {
 		System.out.println(company.getEmail());
 		try {
 			if(company.getPassword() != null && company.getEmail()  != null) {
-				int id = service.verifyCompany(company.getEmail(),company.getPassword());
+				int id = service.verifyCompany(company.getEmail(), encrypt(company.getPassword()));
 				return service.getCompany(id);
 			}
 			
@@ -107,7 +104,6 @@ public class CompanyController {
 	//agregar Compañia
 	@PostMapping(value="")
 	public RestResponse save(@RequestBody Company company) {
-		Company company2;
 		if(!this.validateCompany(company)) {
 			return new RestResponse(HttpStatus.NOT_ACCEPTABLE.value(),"Los campos obligatorios no estan diligenciados ");
 		}
@@ -119,7 +115,8 @@ public class CompanyController {
 			}else {
 				company.setUrlCompany(company.getNameCompany()+ (count++));
 			}
-			company2 = service.save(company);
+			company.setPassword(encrypt(company.getPassword()));
+			service.save(company);
 			Util.createImg(context.getRealPath("/finalDisenos")+"/"+company.getUrlCompany());
 			Util.createImg(context.getRealPath("/imgDisenos")+"/"+company.getUrlCompany());
 		} catch (Exception e) {
@@ -131,7 +128,7 @@ public class CompanyController {
 		}
 		
 
-		return new RestResponse(HttpStatus.OK.value(), company2.getUrlCompany() );
+		return new RestResponse(HttpStatus.OK.value(), company.getUrlCompany() );
 	}
 	
 	private void trimString(Company company) {
@@ -168,6 +165,15 @@ public class CompanyController {
 		}
 	}
 	
+	
+	//Cifrado
+		public static String encrypt(String password) throws Exception {
+		   byte[] cipherText = MessageDigest.getInstance("SHA-256").digest(password.getBytes("UTF-8"));
+		   return Base64.getEncoder().encodeToString(cipherText);
+		}
+		
+
+
 
 
 

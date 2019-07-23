@@ -26,7 +26,7 @@ public class Company {
 	@Column(name="nombre_compania", nullable=false,length=60 )
 	private String nameCompany;
 	
-	@Column(name="contrasena", nullable=false,length=60 )
+	@Column(name="contrasena", nullable=false,length=256 )
 	private String password;
 	
 	@Column(name="email", nullable=true,length=100 )

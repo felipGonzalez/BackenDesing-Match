@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS desingMatchDB.companias;
 CREATE TABLE companias(
 	id_compania INT(4) NOT NULL,
 	nombre_compania VARCHAR(60) NOT NULL,
-	contrasena VARCHAR(60) NOT NULL,
+	contrasena VARCHAR(256) NOT NULL,
 	email VARCHAR(100),
     url_compania VARCHAR(60) NOT NULL,
 	PRIMARY KEY (id_compania)
@@ -68,12 +68,15 @@ ALTER TABLE proyecto_diseno ADD(
 	CONSTRAINT des_fk_idpro FOREIGN KEY (id_proyecto) REFERENCES proyectos(id_proyecto),
 	CONSTRAINT des_fk_ides foreign key (id_diseno) REFERENCES disenos(id_diseno)
 );
-/*Insecion de prueba Compañias*/
+/*
+
+
+/*Insecion de prueba Compañias
 INSERT INTO `desingMatchDB`.`companias` (`id_compania`, `nombre_compania`, `contrasena`, `email`,`url_compania`) VALUES ('1', 'UPTC','123456','uptc@uptc.edu.co','uptc');
 INSERT INTO `desingMatchDB`.`companias` (`id_compania`, `nombre_compania`, `contrasena`, `email`,`url_compania`) VALUES ('2', 'COOPCASUR','123456','coopcasur@gmil.com', 'coopcasur');
 
 
-/*Insercion de prueba Proyectos*/
+/*Insercion de prueba Proyectos
 INSERT INTO `desingMatchDB`.`proyectos` (`id_proyecto`, `nombre_proyecto`, `descripcion`, `valor`,`id_compania`) VALUES ('1', 'Revive tus momentos','lorem ipsum dolor sit amet,consectetur adipiscing elit',
 '3123434', '1');
 INSERT INTO `desingMatchDB`.`proyectos` (`id_proyecto`, `nombre_proyecto`, `descripcion`, `valor`,`id_compania`) VALUES ('2', 'proyecto 2','Lorem ipsum dolor sit amet,
@@ -102,7 +105,7 @@ INSERT INTO `desingMatchDB`.`proyectos` (`id_proyecto`, `nombre_proyecto`, `desc
 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','4354213', '2');
 INSERT INTO `desingMatchDB`.`proyectos` (`id_proyecto`, `nombre_proyecto`, `descripcion`, `valor`,`id_compania`) VALUES ('10', 'LOREM','Lorem ipsum dolor sit amet,
  consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','53433535', '2');
+exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.','53433535', '2');*/
 
 /* Inserciones prueba diseños*/
 /*
